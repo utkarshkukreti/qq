@@ -1,0 +1,48 @@
+#!/usr/bin/env ruby
+
+require 'fileutils'
+require 'yaml'
+
+yaml_path = File.expand_path("~/.qq")
+
+FileUtils.touch(yaml_path) unless File.exist?(yaml_path)
+
+yaml = YAML.load(File.open(yaml_path)) || {}
+
+help = <<EOT
+Usage:
+  List
+    qq
+  Add:
+    qq <key> <value>
+  Fetch
+    qq <key>
+  Help
+    qq --help
+EOT
+
+if ARGV.size == 0
+  puts yaml.map { |k, v| "#{k}\t#{v}" }
+elsif ARGV.size == 1
+  key = ARGV.first
+
+  if key == "--help"
+    puts help
+  else
+    if yaml[key]
+      puts yaml[key]
+    else
+      puts "Invalid key #{key}"
+      exit 1
+    end
+  end
+elsif ARGV.size == 2
+  key = ARGV.first
+  value = ARGV.last
+  yaml[key] = value
+  YAML.dump(yaml, File.open(yaml_path, 'w'))
+else
+  puts help
+end
+
+# vim: filetype=ruby
