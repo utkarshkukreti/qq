@@ -21,6 +21,16 @@ The database is stored in a yaml file in `~/.qq`
     Help
       qq --help
 
+## ZSH autocompletion
+
+Add this to your .zshrc (or some script you source from .zshrc)
+
+    # Autocompletion for qq (http://github.com/utkarshkukreti/qq)
+    function _qq() {
+           _values -S , keys $(qq --keys) && ret=0
+    }
+    compdef _qq qq
+
 ## License
 
 &copy; Utkarsh Kukreti, 2012.
