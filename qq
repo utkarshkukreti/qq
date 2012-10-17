@@ -28,6 +28,8 @@ elsif ARGV.size == 1
 
   if key == "--help"
     puts help
+  elsif key == "--keys"
+    puts yaml.keys
   else
     if yaml[key]
       puts yaml[key]
